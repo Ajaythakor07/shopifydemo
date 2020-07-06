@@ -1,0 +1,67 @@
+{% for block in section.blocks limit:2%}
+{% assign counter=0 %}
+{% if counter==true %}
+<section class="brand-sec">
+    <div class="container">
+        <div class="cen-section">
+            <div class="left-img-brand">
+                <img src="{{block.settings.brnd_img | img_url: 'master'}}">
+            </div>
+            <div class="right-con-brand">
+                <h2 class="title-cls">{{block.settings.brnd_tl}}</h2>
+                <p>{{block.settings.brnd_cnt}}</p>
+                <a href="{{block.settings.brnd_btn_url}}" class="btn-read">{{block.settings.brnd_btn}}</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% else %}
+<section class="why-us-sec">
+    <div class="container">
+        <div class="cen-section">
+            <div class="why-content">
+                <h2 class="title-cls">{{block.settings.brnd_tl}}</h2>
+                <p>{{block.settings.brnd_cnt}}</p>
+            </div>
+            <div class="why-img-sec">
+                <img src="{{block.settings.brnd_img | img_url: 'master'}}">
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% assign counter = counter | plus:1 %}
+{% endfor %}
+{% schema %}
+{
+    "name": "Brand-Why Section",
+    "blocks":
+    [
+        {
+            "type": "image_picker",
+            "id":"brnd_img",
+            "Label":"Image"
+        },
+        {
+            "type": "text",
+            "id":"brnd_tl",
+            "Label":"Title"
+        },
+        {
+            "type": "text",
+            "id":"brnd_cnt",
+            "Label":"Content"
+        },
+        {
+            "type": "text",
+            "id":"brnd_btn",
+            "Label":"Button Name"
+        },
+        {
+            "type": "text",
+            "id":"brnd_btn_url",
+            "Label":"Button Url"
+        }
+    ]
+}
+{% endschema %}

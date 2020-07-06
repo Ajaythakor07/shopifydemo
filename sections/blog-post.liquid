@@ -1,0 +1,128 @@
+<section class="latest-post-sec">
+  <div class="container">    
+    {% if section.settings.title != blank %}
+      <h2 class="title-cls"></h2>{{ section.settings.title | escape }}</
+    {% endif %}    
+    <div class="post-sec">
+      {%- assign blog = blogs[section.settings.blog] -%}  
+      {% for article in blog.articles limit: section.settings.post_limit %}    
+      <div class="post-main">
+        <div class="post-image">
+          {% if article.image %}
+          <img src="{{article.image | img_url: 'master'}}">
+        {% endif %}
+        </div>
+        {% if section.settings.blog_show_date %}
+        <span class="date-post">
+          {{ article.published_at | time_tag: format: 'month_day_year' }}
+        </span>
+        {% endif %}      
+        <h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
+        <p>{% if article.excerpt.size > 0 %}
+          {{ article.excerpt }}
+        {% else %}
+          {{ article.content | strip_html | truncate: 150 }}
+        {% endif %}</p>
+        <a href="{{ article.url }}" class="btn-post" aria-label="{{ 'blogs.article.read_more_title' }}">Read More</a>
+      </div>
+      {% endfor %}
+    </div>
+</section>
+    
+  
+    
+    <ul class="blog-post">
+      
+        <li class="blog-post__item">
+          <a href="{{ article.url }}">
+            {% if article.image %}
+              <img src="{{article.image | img_url: 'master'}}">
+            {% endif %}
+            <h3>{{ article.title }}</h3>
+          </a>
+  
+          <div>
+            {% if section.settings.blog_show_author %}
+              <span>{{ 'blogs.article.by_author' }}</span>
+            {% endif %}
+  
+            {% if section.settings.blog_show_date %}
+              <p>
+                {{ article.published_at | time_tag: format: 'month_day_year' }}
+              </p>
+            {% endif %}
+  
+            <div>
+              {% if article.excerpt.size > 0 %}
+                {{ article.excerpt }}
+              {% else %}
+                {{ article.content | strip_html | truncate: 150 }}
+              {% endif %}
+            </div>
+  
+            {% if article.tags.size > 0 %}
+              <ul aria-label="{{ 'blogs.article.tags' }}">
+                {% for tag in article.tags %}
+                  <li><a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a></li>
+                {% endfor %}
+              </ul>
+            {% endif %}  
+            <a href="{{ article.url }}" aria-label="{{ 'blogs.article.read_more_title' }}">{{ 'blogs.article.read_more' }}</a>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+  
+  {% schema %}
+    {
+      "name": "Blog posts",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Blog posts"
+        },
+        {
+          "id": "blog",
+          "type": "blog",
+          "label": "Blog"
+        },
+        {
+          "type": "range",
+          "id": "post_limit",
+          "label": "Posts",
+          "min": 3,
+          "max": 12,
+          "step": 3,
+          "default": 3
+        },
+        {
+          "type": "checkbox",
+          "id": "blog_show_author",
+          "label": "Show author",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "blog_show_date",
+          "label": "Show date",
+          "default": true
+        }
+      ],
+      "presets": [
+        {
+          "name": "Blog posts",
+          "category": "Blog",
+          "settings": {
+            "blog": "News",
+            "post_limit": 3
+          }
+        }
+      ]
+    }
+  {% endschema %}
+  
+
+  

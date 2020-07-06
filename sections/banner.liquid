@@ -1,0 +1,42 @@
+{% include 'banner-image' %}
+
+{% schema %}
+{
+    "name":"Banner",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id":"banner_img",
+            "label":"banner image"
+        },
+        {
+            "type": "text",
+            "id":"banner_small_text",
+            "label":"banner image small text"
+        },
+        {
+            "type": "text",
+            "id":"banner_title",
+            "label":"banner image heading text"
+        },
+        {
+            "type": "text",
+            "id":"banner_btn_text",
+            "label":"button text"
+        },
+        {
+            "type": "url",
+            "id":"banner_btn_url",
+            "label":"button url"
+        }
+    ],
+
+    "presets": [
+      {
+        "name": "Image Banner",
+        "category": "Image"
+      }
+    ]
+}
+
+{% endschema %}

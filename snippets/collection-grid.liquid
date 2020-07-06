@@ -1,0 +1,21 @@
+        <div class="col-lg-8">
+          <div class="product-item sm-height full-height bg-gray">
+            {%- assign collection = collections[section.settings.collection_add_1] -%}
+            <a href="{{collection.url}}" class="product-category">{{collection.title}} <span>{{collection.products_count}}items</span></a>
+            <img src="{{collection.image | img_url: 'master' }}" alt="Image" class="img-fluid"> 
+          
+          </div>
+        </div>  
+        <div class="col-lg-4">
+          <div class="product-item sm-height bg-gray mb-4">
+            {%- assign collection = collections[section.settings.collection_add_2] -%}
+            <a href="{{collection.url}}" class="product-category">{{collection.title}} <span>{{collection.products_count}}items</span></a>
+            <img src="{{collection.image | img_url: 'master' }}" alt="Image" class="img-fluid"> 
+          </div>
+
+          <div class="product-item sm-height bg-gray">
+            {%- assign collection = collections[section.settings.collection_add_3] -%}
+            <a href="{{collection.url}}" class="product-category">{{collection.title}} <span>{{collection.products_count}}items</span></a>
+            <img src="{{collection.image | img_url: 'master' }}" alt="Image" class="img-fluid"> 
+          </div>
+        </div>

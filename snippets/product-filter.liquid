@@ -1,0 +1,143 @@
+<div class="border p-4 rounded mb-4">
+    <div class="mb-4">
+      <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Price</h3>
+      <div id="slider-range" class="border-primary"></div>
+      <input type="range" name="text" id="amount" min="1000" max="100000" value="0" class="form-control border-0 pl-0 bg-white"  />
+      <p>Price: <span id="demo"></span></p>
+        <script>
+        var slider = document.getElementById("amount");
+        var output = document.getElementById("demo");
+        output.innerHTML = slider.value;
+
+        slider.oninput = function() {
+        output.innerHTML = this.value;
+        }
+        </script>
+    </div>
+
+    <div class="mb-4">
+        <h3 class="mb-3 h6 text-uppercase text-black d-block">Size</h3>
+        <label for="s_sm" class="d-flex">
+          <input type="checkbox" id="s_sm" class="mr-2 mt-1"> <span class="text-black">Small (2,319)</span>
+        </label>
+        <label for="s_md" class="d-flex">
+          <input type="checkbox" id="s_md" class="mr-2 mt-1"> <span class="text-black">Medium (1,282)</span>
+        </label>
+        <label for="s_lg" class="d-flex">
+          <input type="checkbox" id="s_lg" class="mr-2 mt-1"> <span class="text-black">Large (1,392)</span>
+        </label>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="mb-3 h6 text-uppercase text-black d-block">Color</h3>
+        <a href="#" class="d-flex color-item align-items-center" >
+          <span class="bg-danger color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Red (2,429)</span>
+        </a>
+        <a href="#" class="d-flex color-item align-items-center" >
+          <span class="bg-success color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Green (2,298)</span>
+        </a>
+        <a href="#" class="d-flex color-item align-items-center" >
+          <span class="bg-info color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Blue (1,075)</span>
+        </a>
+        <a href="#" class="d-flex color-item align-items-center" >
+          <span class="bg-primary color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Purple (1,075)</span>
+        </a>
+      </div>
+
+  </div>
+  <div class="border p-4 rounded mb-4">
+    <ul class="clearfix">
+      <li class="clearfix filter">
+        <p>Shop by category</p>
+        <select class="coll-picker">
+          <option value="all">All</option>
+          {% for c in collections %}
+          {% unless c.handle == 'all' %}
+          {% if collection.handle == c.handle %}
+          <option value="{{ c.handle }}" selected>{{ c.title }}</option>
+          {% else %}
+          <option value="{{ c.handle }}">{{ c.title }}</option>
+          {% endif %}
+          {% endunless %}
+          {% endfor %}
+        </select>
+      </li>
+      <li class="clearfix filter">
+        {% assign tags = 'Red, Green, Blue' | replace: ' ,', ',' | replace: ', ', ',' | split: ',' %}
+        <p>color</p>
+        <select class="coll-filter">
+          <option value="">All</option>
+          {% for tag in tags %}          
+          <option value="{{ tag | handle }}">{{ tag }}</option>
+          {% endfor %}          
+        </select>
+      </li>
+      <li class="clearfix filter">
+        {% assign tags = 'Small, Medium, Large' | replace: ' ,', ',' | replace: ', ', ',' | split: ',' %}
+        <p>Shop by size</p>
+        <select class="coll-filter">
+          <option value="">All</option>
+          {% for tag in tags %}          
+          <option value="{{ tag | handle }}">{{ tag }}</option>
+          {% endfor %}
+        </select>
+      </li>
+    </ul>
+    
+  </div>
+
+  <script>
+    /* Product Tag & Collection Filters - Good for any number of filters on any type of collection pages */
+    /* Give you product tag filter select element a class of coll-filter */
+    /* Give your collection select a class of coll-picker */
+    /* Brought to you by Caroline Schnapp */
+    var allFilters = jQuery('.coll-filter, .coll-picker');
+    allFilters.change(function() {
+      var newTags = [];
+      jQuery('.coll-filter').each(function() { 
+        if (jQuery(this).val()) {
+          newTags.push(jQuery(this).val());
+        }
+      });
+      if (newTags.length) {
+        var query = newTags.join('+');
+        if (jQuery('.coll-picker').length) {
+          window.location.href = '/collections/' + jQuery('.coll-picker').val() + '/' + query;
+        }
+        else {
+          window.location.href = jQuery('{{ 'tag' | link_to_tag: 'tag' }}').attr('href').replace('tag', query);
+        }
+      } 
+      else {
+        if (jQuery('.coll-picker').length) {
+          window.location.href = '/collections/' + jQuery('.coll-picker').val();
+        }
+        else {
+          {% if collection.handle %}
+          window.location.href = '/collections/{{ collection.handle }}';
+          {% elsif collection.products.first.type == collection.title %}
+          window.location.href = '{{ collection.title | url_for_type }}';
+          {% elsif collection.products.first.vendor == collection.title %}
+          window.location.href = '{{ collection.title | url_for_vendor }}';
+          {% endif %}
+        }
+      }
+    });
+  </script>
+  <script>
+    Shopify.queryParams = {};
+    if (location.search.length) {
+      for (var aKeyValue, i = 0, aCouples = location.search.substr(1).split('&'); i < aCouples.length; i++) {
+        aKeyValue = aCouples[i].split('=');
+        if (aKeyValue.length > 1) {
+          Shopify.queryParams[decodeURIComponent(aKeyValue[0])] = decodeURIComponent(aKeyValue[1]);
+        }
+      }
+    }
+    jQuery('#sort-by')
+      .val('{{ collection.sort_by | default: collection.default_sort_by | escape }}')
+      .bind('change', function() {
+        Shopify.queryParams.sort_by = jQuery(this).val();
+        location.search = jQuery.param(Shopify.queryParams).replace(/\+/g, '%20');
+      });
+    </script>

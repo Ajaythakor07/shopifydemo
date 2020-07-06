@@ -1,0 +1,101 @@
+{% if section.settings.pkgn_title!=blank%}
+<section class="packeging-sec">
+    <div class="container">
+        <h2 class="title-cls">{{section.settings.pkgn_title}}</h2>
+        <div class="boxed-packag">
+            {% for block in section.blocks %}
+            {% case block.type %}
+            {% when 'text' %}
+            <div class="main-whlsl-sec">
+                <img src="{{block.settings.pckgn_img | img_url: 'master'}}">
+                <a href="{{block.settings.pckgn_btn_link }}">
+                    <h3>{{block.settings.pckgn_btn }}</h3>
+                </a>
+            </div>
+            {% endcase %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% if section.settings.pkgn_title!=blank%}
+<section class="product-sec">    
+    {% for block in section.blocks %}
+    {% assign counter=0 %}
+    {% assign counter = counter | plus:1 %}
+    {% case block.type %}
+    {% when 'Image' %}
+    {% if counter==true %}
+    <div class="pro-main left-prod">
+    {% else %}
+    <div class="pro-main right-prod">
+    {% endif %}
+        <img src="{{block.settings.prdct_img | img_url: 'master'}}">
+        <span class="title-product">
+            <a href="{{block.settings.product_btn_link }}">
+                {{block.settings.prdct_btn }}
+            </a>
+        </span>
+    </div>
+    {% endcase %}
+    {% endfor %}
+</section>
+{% endif %}
+{% schema %} 
+{ 
+    "name": "packaging sec",
+    "settings": [ 
+        {
+        "type": "text", 
+        "id":"pkgn_title", 
+        "label":"heading" 
+        } 
+    ], 
+ "blocks":[ 
+    { 
+        "name": "Packagng Details", 
+        "type": "text", 
+        "settings": 
+        [ 
+            { 
+            "type": "image_picker",
+            "id":"pckgn_img",
+            "label":"Packaging Image"
+            },
+            {
+            "type": "text", 
+            "id":"pckgn_btn", 
+            "label":"Packaging Button" 
+            },
+            { 
+            "type": "text",
+            "id":"pckgn_btn_link", 
+            "label":"Packaging Button Url"
+            }
+        ]
+    },
+    { 
+        "name": "Product Details", 
+        "type": "image", 
+        "settings": 
+        [ 
+            { 
+            "type": "image_picker",
+            "id":"prdct_img",
+            "label":"Product Image"
+            },
+            {
+            "type": "text", 
+            "id":"prdct_btn", 
+            "label":"Product Button" 
+            },
+            { 
+            "type": "text",
+            "id":"product_btn_link", 
+            "label":"Product Button Url"
+            }
+        ]    
+    }
+    ]
+ } 
+ {% endschema %}

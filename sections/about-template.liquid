@@ -1,0 +1,155 @@
+<div class="site-wrap">
+    <div class="custom-border-bottom py-3">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">{{page.title}}</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="site-section site-section-sm site-blocks-1 border-0" >
+        <div class="container">
+          <div class="row">
+            {% for block in section.blocks %} 
+            {% case block.type %}
+            {% when 'text' %} 
+            <div class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4" >
+              <div class="icon mr-4 align-self-start">
+                <span class="icon-truck"></span>
+              </div>
+              <div class="text">
+                <h2 class="text-uppercase">{{block.settings.about_services_heading}}</h2>
+                <p>{{block.settings.about_services_content}}</p>
+              </div>
+            </div>
+            {% endcase %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="site-section custom-border-bottom">
+        <div class="container">
+          <div class="row mb-5">
+            <div class="col-md-6">
+              <div class="block-16">
+                <figure>
+                  <img src="{{section.settings.how_we_start_img | img_url: 'master'}}" alt="Image placeholder" class="img-fluid rounded">
+                  <a href="https://vimeo.com/channels/staffpicks/93951774" class="play-button popup-vimeo"><span class="icon-play"></span></a>
+  
+                </figure>
+              </div>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-5">
+              <div class="site-section-heading pt-3 mb-4">
+                <h2 class="text-black">{{section.settings.how_we_start_title }}</h2>
+              </div>
+              <p>{{section.settings.how_we_start_content }}</p>              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="site-section custom-border-bottom" >
+        <div class="container">
+          <div class="row justify-content-center mb-5">
+            <div class="col-md-7 site-section-heading text-center pt-4">
+              <h2>{{section.settings.about_team_title}}</h2>
+            </div>
+          </div>
+          <div class="row">
+            {% for block in section.blocks %}
+            {% case block.type %}
+            {% when 'Image' %}
+            <div class="col-md-6 col-lg-3">    
+              <div class="block-38 text-center">
+                <div class="block-38-img">
+                  <div class="block-38-header">
+                    <img src="{{block.settings.team_img | img_url: 'master'}}" alt="Image placeholder" class="mb-4">
+                    <h3 class="block-38-heading h4">{{block.settings.team_person_heading }}</h3>
+                    <p class="block-38-subheading">{{block.settings.team_person_designation }}</p>
+                  </div>
+                  <div class="block-38-body">
+                    <p>{{block.settings.team_person_discription }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endcase %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+</div>
+
+{% schema %}
+{
+    "name": "About Page",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id":"how_we_start_img",
+            "label":"Image"
+        },
+        {
+            "type": "text",
+            "id":"how_we_start_title",
+            "label":"heading"
+        },
+        {
+            "type": "text",
+            "id":"how_we_start_content",
+            "label":"Content"
+        },
+        {
+            "type": "text",
+            "id":"about_team_title",
+            "label":"Team Heading"
+        }
+    ],
+    "blocks":[
+    {
+        "name": "About Details",
+        "type": "text",
+        "settings": [
+        {
+            "type": "text",
+            "id":"about_services_heading",
+            "label":"services heading"
+        },
+        {
+            "type": "text",
+            "id":"about_services_content",
+            "label":"services content"
+        }
+
+        ]
+    },
+    {
+        "name": "Team Details",
+        "type": "Image",
+        "settings": [
+        {
+            "type": "image_picker",
+            "id":"team_img",
+            "label":"Image"
+        },
+        {
+            "type": "text",
+            "id":"team_person_heading",
+            "label":"Team person heading"
+        },
+        {
+            "type": "text",
+            "id":"team_person_designation",
+            "label":"Team person Designation"
+        },
+        {
+            "type": "text",
+            "id":"team_person_discription",
+            "label":"Team person Discription"
+        }
+
+        ]
+    }
+    ]
+}
+{% endschema %}

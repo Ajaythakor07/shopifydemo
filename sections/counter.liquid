@@ -1,0 +1,82 @@
+<section class="cont-sec">
+    <div class="container">
+        <div class="count-box">
+            {% for block in section.blocks %}
+          	{% if block.type=='text' %}
+            <div class="count-detail">
+                <h3>{{block.settings.counter_title}}</h3>
+                <p>{{block.settings.counter_text}}</p>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% if section.settings.trust_title != empty%}
+<section class="client-logo">
+    <div class="container">
+        <h2 class="title-cls">{{section.settings.trust_title}}</h2>
+        <div class="logo-sec-client">
+            {% for block in section.blocks %}
+          	{% if block.type=='image' %}
+            <div class="logo-img">
+                <img class="logo-norml" src="{{block.settings.trust_img}}">
+                <img class="logo-blue" src="{{block.settings.trust_hvr_img}}">
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% schema %}
+{
+    "name": "Conter Data",
+    "settings": [
+        {
+            "type": "text",
+            "id":"trust_title",
+            "label":"People Trust Header"
+        }
+    ]
+    "blocks":
+    [
+        {
+            "name": "Conter Details",
+            "type": "text",
+            "settings": 
+            [
+                {
+                    "type": "text",
+                    "id":"counter_title",
+                    "label":"Counter Header"
+                },
+                {
+                    "type": "text",
+                    "id":"counter_text",
+                    "label":"Counter Content"
+                }
+            ]
+        },
+        {
+            "name": "People Trust",
+            "type": "image",
+            "settings": 
+            [
+                {
+                    "type": "image_picker",
+                    "id":"trust_img",
+                    "label":"Brand Image"
+                },
+                {
+                    "type": "image_picker",
+                    "id":"trust_hvr_img",
+                    "label":"Brand Hover Image"
+                }
+            
+            ]
+        }
+
+    ]
+}
+{% endschema %}

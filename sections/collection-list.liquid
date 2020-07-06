@@ -1,0 +1,48 @@
+<div class="site-section">
+    <div class="container">
+      <div class="title-section mb-5">
+        <h2 class="text-uppercase"><span class="d-block">{{section.settings.collection_list_text}}</h2>
+      </div>
+      
+    <div class="row align-items-stretch">
+     {% include 'collection-grid' %}
+    </div>
+    </div>
+</div>
+{% schema %}
+{
+    "name":"Collection List",
+    "settings": [
+        {
+            "type": "text",
+            "id":"collection_list_text",
+            "label":"Title"
+        },
+        {
+            "type": "collection",
+            "id":"collection_add_1",
+            "label":"add collection"
+
+        },       
+        {
+            "type": "collection",
+            "id":"collection_add_2",
+            "label":"add collection"
+
+        },         
+        {
+            "type": "collection",
+            "id":"collection_add_3",
+            "label":"add collection"
+
+        }
+    ],
+    "presets":
+    [
+        {
+            "category": "collection",
+            "name":"collection List"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,148 @@
+<footer class="site-footer custom-border-top">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
+          <h3 class="footer-heading mb-4">{{section.settings.promo_title}}</h3>
+          {%- assign product = all_products[section.settings.promo_product] -%}
+          <a href="{{product.url}}" class="block-6">
+            <img src="{{product.featured_image.src | product_img_url: 'medium'}}" alt="Image placeholder" class="img-fluid rounded mb-4">
+            <h3 class="font-weight-light  mb-0">{{section.settings.promo_product_title}}</h3>
+            <p>{{section.settings.promo_product_date}}</p>
+          </a>
+        </div>
+        <div class="col-lg-5 ml-auto mb-5 mb-lg-0">
+          <div class="row">
+            <div class="col-md-12">
+              <h3 class="footer-heading mb-4">{{ section.settings.quick_link_title}}</h3>
+            </div>
+            {% for block in section.blocks %}
+            <div class="col-md-6 col-lg-4">
+                {%- assign footer_linklist = block.settings.quick_links -%}
+                <ul class="list-unstyled">
+                    {%- for link in linklists[footer_linklist].links -%}
+                    <li class="site-footer__linklist-item">
+                        <a href="{{ link.url }}"
+                        {% if link.current %} aria-current="page"{% endif %}
+                        >
+                        {{ link.title | escape }}
+                        </a>
+                    </li>
+                    {%- endfor -%}
+                </ul>
+            </div>
+            {% endfor%}
+            
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-3">
+          <div class="block-5 mb-5">
+            <h3 class="footer-heading mb-4">{{ section.settings.contact_title}}</h3>
+            <ul class="list-unstyled">
+              <li class="address"> {{section.settings.address_text}}</li>
+              <li class="phone"><a href="tel://23923929210"> {{section.settings.contact_number}}</a></li>
+              <li class="email"> {{section.settings.email_text}}</li>
+            </ul>
+          </div>
+
+          <div class="block-7">
+            <form action="#" method="post">
+              <label for="email_subscribe" class="footer-heading">Subscribe</label>
+              <div class="form-group">
+                <input type="text" class="form-control py-4" id="email_subscribe" placeholder="Email">
+                <input type="submit" class="btn btn-sm btn-primary" value="Send">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-5 mt-5 text-center">
+        <div class="col-md-12">
+          <p>
+          {{section.settings.copyright_text}}
+          </p>
+        </div>
+        
+      </div>
+    </div>
+  </footer>
+
+  {% schema %}
+  {
+      "name": "Footer",
+      "settings": [
+        {
+            "type": "text",
+            "id":"promo_title",
+            "label":"Add promo title"
+        },
+        {
+          "type": "product",
+          "id":"promo_product",
+          "label":"Add promo product"
+        },
+        {
+          "type": "text",
+          "id":"promo_product_title",
+          "label":"Add promo product title"
+        },
+        {
+          "type": "text",
+          "id":"promo_product_date",
+          "label":"Add promo product date"
+        },
+        {
+            "type": "text",
+            "id":"quick_link_title",
+            "label":"Add Quick Link Title"
+        },
+        {   
+            "type": "text",
+            "id":"contact_title",
+            "label":"add contact title"  
+            
+        },
+        {   
+            "type": "text",
+            "id":"address_text",
+            "label":"address"  
+            
+        },
+        {   
+            "type": "text",
+            "id":"contact_number",
+            "label":"phone number"  
+            
+        },
+        {   
+            "type": "text",
+            "id":"email_text",
+            "label":"Email"  
+            
+        },
+        {   
+            "type": "text",
+            "id":"copyright_text",
+            "label":"add copyright text"  
+            
+        }
+      ],  
+           
+    "blocks":[
+    {
+        "type": "link_list",
+        "name":" LinkliSt",
+            "settings": [
+                {
+                    "type": "link_list",
+                    "id":"quick_links",
+                    "label":"Quick Links"
+                }
+            ]
+        
+    }
+    ]
+    
+      
+    }
+  {% endschema %}

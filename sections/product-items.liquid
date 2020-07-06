@@ -1,0 +1,52 @@
+<div class="site-section">
+    <div class="container">
+      <div class="row">
+        <div class="title-section mb-5 col-12">
+          <h2 class="text-uppercase">{{section.settings.heading_text}}</h2>
+        </div>
+      </div>
+      <div class="row">
+        {% for block in section.blocks %}
+        {%- assign product = all_products[block.settings.product] -%}
+        <div class="col-lg-4 col-md-6 item-entry mb-4">
+          <a href="{{product.url}}" class="product-item md-height bg-gray d-block">
+            <img src="{{ product.featured_image.src | product_img_url: 'medium' }}" alt="Image" class="img-fluid">
+          </a>
+          <h2 class="item-title"><a href="{{product.url}}">{{product.title}}</a></h2>
+          <strong class="item-price"><del>{{product.compare_at_price | money}}</del>{{product.price | money}}</strong>
+        </div>
+        {% endfor %}
+    </div>
+ </div>
+</div>
+{% schema %}
+  {
+    "name": "popular product",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading_text",
+        "label": "Heading"
+      }
+    ],
+    "blocks":[
+
+    { "type": "product",
+      "name":"popular product",
+        "settings": [
+      {
+        "type": "product",
+        "id": "product",
+        "label": "Product"
+      }
+    ]
+  }
+    ],
+    "presets": [
+      {
+        "name": "popular product",
+        "category": "Product"
+      }
+    ]
+  }
+{% endschema %}

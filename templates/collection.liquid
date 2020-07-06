@@ -1,0 +1,29 @@
+<div class="site-wrap">
+  <div class="container">
+    <div class="row">
+      <div class="title-section mb-5 col-12 mt-5">
+        <h2 class="text-uppercase">{{ collection.title }}</h2>
+      </div>
+    </div>
+    <div class="row">
+      {% paginate collection.products by 4 %}
+      {% for product in collection.products %}
+      <div class="col-lg-4 col-md-6 item-entry mb-4">
+        <a href="{{product.url | within: collection}}" class="product-item md-height bg-gray d-block">
+          <img src="{{ product.featured_image.src | product_img_url: 'medium' }}" alt="Image" class="img-fluid">
+        </a>
+        <h2 class="item-title"><a href="{{product.url | within: collection}}">{{product.title}}</a></h2>
+        <strong class="item-price"><del>{{product.compare_at_price | money}}</del>{{product.price | money}} {% unless product.available %}<br><strong>sold out</strong>{% endunless %} </strong>
+        <a href="{{product.url | within: collection}}" class="bg-gray d-block btn btn-danger">Shop Now</a>
+      </div>
+      {% endfor %}
+      {% if paginate.pages > 1 %}
+        {{ paginate | default_pagination }}
+      {% endif %}
+      {% endpaginate %}
+  </div>
+</div>
+</div>
+
+
+ 

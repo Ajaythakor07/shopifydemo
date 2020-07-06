@@ -1,0 +1,130 @@
+<div class="site-wrap">
+    
+
+    <div class="site-navbar bg-white py-2">
+
+      <div class="search-wrap">
+        <div class="container" data-search-form-container>
+          <a href="#" class="search-close js-search-close">{% include 'icon-close' %}</a>
+          <form class="search-form search-bar__form" action="{{ routes.root_url }}" method="get" role="search">
+            <div class="search-form__input-wrappers">
+              <input
+                type="text"
+                name="q"
+                placeholder="Search keyword and hit enter..."
+                role="combobox"
+                aria-autocomplete="list"
+                aria-owns="predictive-search-results"
+                aria-expanded="false"
+                aria-label="{{ 'general.search.placeholder'}}"
+                aria-haspopup="listbox"
+                class="search-form__input search-bar__input form-control"
+                data-predictive-search-drawer-input
+              />
+              <input type="hidden" name="options[prefix]" value="last" aria-hidden="true" />
+              <div class="predictive-search-wrapper predictive-search-wrapper--drawer" data-predictive-search-mount="drawer"></div>
+            </div>
+          </form>  
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="logo">
+            <div class="site-logo">
+              {% if section.settings.logo %}
+                {%- assign img_url = section.settings.logo | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                <a href="{{ routes.root_url }}" class="site-header__logo-image{% if section.settings.align_logo == 'center' %} site-header__logo-image--centered{% endif %}">
+                {% capture logo_alt %}{{ section.settings.logo.alt | default: shop.name }}{% endcapture %}
+                <img class="lazyload js"
+                    src="{{ section.settings.logo | img_url: '300x300' }}"
+                    data-src="{{ img_url }}"
+                    data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                    data-aspectratio="{{ section.settings.logo.aspect_ratio }}"
+                    data-sizes="auto"
+                    alt="{{ logo_alt | escape }}"
+                    style="max-width: {{ section.settings.logo_max_width }}px">
+                <noscript>
+                    {% capture image_size %}{{ section.settings.logo_max_width | escape }}x{% endcapture %}
+                    <img src="{{ section.settings.logo | img_url: image_size }}"
+                        srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
+                        alt="{{ section.settings.logo.alt | default: shop.name }}"
+                        style="max-width: {{ section.settings.logo_max_width }}px;">
+                </noscript>
+                </a>
+            {% else %}
+                <a class="site-header__logo-link js-logo-clone" href="{{ routes.root_url }}">ShopMax</a>
+            {% endif %}
+            </div>
+          </div>
+          <div class="main-nav d-none d-lg-block">
+            <nav class="site-navigation text-right text-md-center" role="navigation">
+              <ul class="site-menu js-clone-nav d-none d-lg-block">
+                {% for link in linklists.main-menu.links %}
+                {% assign child_list_handle = link.title | handleize %}
+                {% if linklists[child_list_handle].links != blank %}
+                <li>
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+                [{% for childlink in linklists[child_list_handle].links %}
+                   <li>
+                    <a href="{{ childlink.url }}">{{ childlink.title | escape }}</a>
+                   </li>
+                {% endfor %}]
+                {% else %}
+                <li>
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+            </nav>
+          </div>
+          <div class="icons">
+            <a href="#" class="icons-btn d-inline-block js-search-open">{% include 'icon-search' %}</a>
+            <a href="#swym-wishlist" class="icons-btn d-inline-block swym-button" data-to>
+              &hearts;
+              <span class="swym-fave-count d-inline-block" data-count="0">0</span> 
+            </a>
+            <a href="{{ routes.cart_url }}" class="site-header__icon site-header__cart icons-btn d-inline-block bag">
+              {% include 'icon-cart' %}<span class="d-inline-block" data-cart-count>{{ cart.item_count }}</span>
+            </a>
+            {% if shop.customer_accounts_enabled %}
+                {% if customer %}
+                
+                <a href="/account" class="">account</a>
+                {% include 'icon-login' %}
+                {{ 'log out'  | customer_logout_link }}
+                {% else %}
+                {{ 'log in ' | customer_login_link }}
+                or
+                {{ 'register' | customer_register_link }}
+                {% endif %}
+            {% endif %}
+            <a href="#" class="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none"><span class="icon-menu"></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+    jQuery(document).ready(function($){
+        var searchShow = function() {
+		// alert();
+		var searchWrap = $('.search-wrap');
+		$('.js-search-open').on('click', function(e) {
+			e.preventDefault();
+			searchWrap.addClass('active');
+			setTimeout(function() {
+				searchWrap.find('.form-control').focus();
+			}, 300);
+		});
+		$('.js-search-close').on('click', function(e) {
+			e.preventDefault();
+			searchWrap.removeClass('active');
+		})
+	};
+	searchShow();
+    });
+    </script>
+
+    

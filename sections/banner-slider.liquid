@@ -1,0 +1,274 @@
+<section class="home-slider">
+    <div class="container">
+        <div class="slick-carousel">
+            {% if block.settings.type=='image' %}
+            {% for block in section.blocks %}
+            <div>
+                <div class="slide-content">
+                    <div class="slider-content">
+                        <h3>{{block.settings.banner_header}}</h3>
+                        <p>{{block.settings.banner_sub_header}}</p>
+                        <a href="{{block.settings.banner_btn_url}}" class="slider-btn">{{block.settings.banner_btn_name}}</a>
+                        <span>Rated  <b>‘Excellent’</b>  on <img src="{{ 'trust-pilot.png' | asset_img_url }}"></span>
+                    </div>
+                    <div class="slider-right-image">
+                        <img src="{{block.settings.banner_right_img}}">
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="slider-info">
+        <div class="container">
+            {% if block.settings.type=='text' %}
+            {% for block in section.blocks %}
+            <div class="content-img">
+                <img src="{{block.settings.s_b_img}}">
+                <p>{{block.settings.s_b_img}}</p>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{ 
+    "name": "Banner Slider", 
+    "blocks": [
+     { 
+        "name": "Slider Data",
+        "type": "image", 
+        "settings": [ 
+        { 
+            "type": "header",
+            "id":"banner_header", 
+            "label":"Banner Title" 
+        },
+        { 
+            "type": "text",
+            "id":"banner_sub_header", 
+            "label":"Banner Sub Title" 
+        },
+        {
+            "type": "text", 
+            "id":"banner_btn_name",
+            "label":"Banner Button Name" 
+        }, 
+        { 
+            "type": "text", 
+            "id":"banner_btn_url", 
+            "label":"Banner Button Url" 
+        }, 
+        { 
+            "type": "image_pecker",
+            "id":"banner_right_img", 
+            "label":"Banner Right Image" 
+        } 
+    ] 
+    },
+    { 
+        "name": "Slider Below Data",
+        "type": "text",
+        "settings": [ 
+            { 
+                "type": "image_picker", 
+                "id":"s_b_img",
+                "label":"Icon Image" 
+            }, 
+            { 
+                "type": "text", 
+                "id":"s_b_text", 
+                "Label":"Icon Text"
+            } 
+        ] 
+    }
+    ]
+
+ }
+  {% endschema %}
+  {% stylesheet %}
+  .home-slider {
+    background: #4790dd;
+    background: -moz-linear-gradient(left, #4790dd 0%, #034f9f 100%);
+    background: -webkit-linear-gradient(left, #4790dd 0%,#034f9f 100%);
+    background: linear-gradient(to right, #4790dd 0%,#034f9f 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4790dd', endColorstr='#034f9f',GradientType=1 );
+	position: relative;
+}
+.home-slider:before {
+    position: absolute;
+    content: '';
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: url(../images/slider-left-main.png) no-repeat;
+    height: 100%;
+    width: 100%;
+}
+.home-slider > .container {
+    width: 1350px;
+}
+.home-slider .slide-content {
+    position: relative;
+}
+.home-slider .slider-content {
+    text-align: center;
+    width: 460px;
+    margin: auto;
+}
+.slider-content h3 {
+    font-size: 52px;
+    color: #fff;
+    line-height: 55px;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+.slider-content p {
+    color: #fff;
+    line-height: 28px;
+    margin-top: 0;
+    margin-bottom: 40px;
+}
+.slider-content a.slider-btn {
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 30px;
+    text-decoration: none;
+    padding: 15px 50px;
+    display: inline-block;
+    text-transform: uppercase;
+    font-family: 'poppinssemibold';
+	margin-bottom: 45px;
+	transition: all 0.3s ease-in-out;
+}
+.slider-content a.slider-btn:hover{
+	background: #000;
+	border: 1px solid #000;
+	transition: all 0.3s ease-in-out;
+}
+.slider-content span b {
+    padding: 0 10px;
+    font-weight: 600;
+}
+.slider-content span {
+    display: flex;
+    width: auto;
+    font-size: 18px;
+    color: #fff;
+    align-items: center;
+	margin-bottom: 30px;
+	justify-content: center;
+}
+.slider-content span img {
+    float: right;
+    background: #fff;
+    padding: 11px 20px;
+    border-radius: 30px;
+	margin-left: 20px;
+}
+.slide-content .slider-right-image {
+    position: absolute;
+    right: 0px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    display: flex;
+    align-items: center;
+}
+.home-slider .slide-content {
+    position: relative;
+    height: 740px;
+    display: flex;
+    align-items: center;
+}
+
+.slick-list {
+  margin: 20px 0px;
+}
+.slick-prev,
+.slick-next {
+  position: absolute;
+  right: 10%;
+  background: #777;
+  border: none;
+  color: transparent;
+  width: 30px;
+  height: 30px;
+}
+.slick-prev:before,
+.slick-next:before {
+  content: ">";
+  color: #fff;
+  font-size: 25px;
+}
+.slick-prev {
+  left: 10%;
+}
+.slick-prev:before {
+  content: "<";
+}
+.slick-dots {
+  list-style: none;
+  margin: 0 auto;
+  text-align: center;
+}
+.slick-dots li {
+  display: inline-block;
+}
+.slick-dots li button {
+  transition: 0.2s background-color ease-in-out 0s;
+  border: none;
+  padding: 0;
+  color: transparent;
+  width: 10px;
+  height: 10px;
+  background-color: #777;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+.slick-dots li.slick-active button {
+  background-color: #fff;
+}
+
+
+.slider-info {
+    background: #000;
+    padding: 6px 0;
+    display: inline-block;
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+}
+.slider-info .content-img {
+    display: flex;
+    float: left;
+    align-items: center;
+    padding-right: 38px;
+}
+.slider-info .content-img:last-child {
+    padding-right: 0;
+}
+.content-img p {
+    font-size: 16px;
+    color: #fff;
+    font-family: 'poppinsregular';
+    padding-left: 10px;
+}
+
+  {% endstylesheet %}
+  {% script %}
+    $(document).ready(function(){
+        $('.slick-carousel').slick({
+        arrows: false,
+        centerPadding: "0px",
+        dots: false,
+        slidesToShow: 1,
+        infinite: true,
+        autoplay: false,
+        autoplaySpeed: 2000
+        });
+    });
+  {% endscript %}
